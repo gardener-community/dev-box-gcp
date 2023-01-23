@@ -17,6 +17,9 @@ For example:
   - Using IPv6 single-stack networking in the local gardener setup requires that your machine has an IPv6 connection to the internet.
     This is very rare in office environments and also not offered by all ISPs by default.
 - Running an entire gardener installation including multiple seed or shoot clusters on your local machine might require more compute resources than your development machine has (at least `10` CPUs and `16Gi` memory).
+  - There is also a ["remote local setup"](https://github.com/gardener/gardener/blob/master/docs/deployment/getting_started_locally.md#remote-local-setup), which starts gardener's local setup inside a pod on a Kubernetes cluster.
+    If you already have a development cluster available, this setup might be an interesting alternative to the more opinionated setup in this repository.
+    However, as this requires a full Kubernetes cluster, it's more costly and less flexible regarding networking connectivity (no IPv6 support) in comparison to the dev box on Google Cloud.
 
 If you face one of these problems, you can use this repository to set up a Google Cloud machine for development instead of your local machine.
 Google Cloud offers simple IPv6 support and machine types that are large enough to host gardener installations.
