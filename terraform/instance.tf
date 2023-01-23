@@ -30,40 +30,9 @@ resource "google_compute_instance" "dev-box" {
     ssh-keys = "${var.user}:${data.local_file.ssh_key.content}"
   }
 
-  metadata_startup_script = <<EOS
-cd /home/${var.user}
-startup_script_done_file=.startup_script_done
-
-cat >>.bashrc <<EOF
-
-export PATH="/home/${var.user}/go/src/github.com/gardener/gardener/hack/tools/bin:\$PATH"
-alias k=kubectl
-EOF
-
-cat >>start-gardener-dev.sh <<EOF
-#!/usr/bin/env bash
-# guide the user when logging in
-if ! [ -e $startup_script_done_file ] ; then
-  until [ -e $startup_script_done_file ] ; do
-    echo "Required development tools are being installed and configured. Waiting 5 more seconds..."
-    sleep 5
-  done
-  echo "Please reconnect your SSH session to reload group membership (required for docker commands)"
-  exit
-fi
-echo "All required development tools are installed and configured. Bringing you to the gardener/gardener directory."
-cd ~/go/src/github.com/gardener/gardener
-exec \$SHELL
-EOF
-chmod +x start-gardener-dev.sh
-
-sudo -u ${var.user} mkdir -p go/src/github.com/gardener/gardener
-apt update
-apt install -y make docker.io golang jq
-gpasswd -a ${var.user} docker
-
-touch $startup_script_done_file
-EOS
+  metadata_startup_script = templatefile("${path.module}/startup_script.sh.tpl", {
+    "user" = var.user
+  })
 
   # required for some projects by organization policy
   shielded_instance_config {
