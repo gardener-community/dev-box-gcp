@@ -3,9 +3,10 @@ include tools.mk
 REPO_ROOT := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 TERRAFORM_DIR := terraform
 
-box-%: export TF_VAR_name = ${USER}-gardener-dev
-box-%: export TF_VAR_user = ${USER}
-box-%: export TF_VAR_serviceaccount_file = $(REPO_ROOT)/secrets/gardener-dev.json
+# GCP resource names don't allow uppercase characters
+box-%: export TF_VAR_name ?= $(shell echo ${USER} | tr '[:upper:]' '[:lower:]')-gardener-dev
+box-%: export TF_VAR_user ?= ${USER}
+box-%: export TF_VAR_serviceaccount_file ?= $(REPO_ROOT)/secrets/gardener-dev.json
 
 .PHONY: box-up
 box-up: $(TERRAFORM)
