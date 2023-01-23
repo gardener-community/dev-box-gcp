@@ -18,7 +18,7 @@ resource "google_compute_firewall" "dev-firewall" {
   name    = var.name
   network = google_compute_network.dev-network.name
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = var.source_ranges
   allow {
     protocol = "icmp"
   }

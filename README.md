@@ -126,6 +126,22 @@ make box-clean
 Note: this doesn't clean up the ServiceAccount you created earlier.
 Use `gcloud` to delete it manually and its related resources.
 
+## Restrict Incoming Traffic
+
+By default, `make box-up` restricts incoming traffic to the dev box to the outgoing IPv4 address of the local device (determined via [ifconfig.me](https://ifconfig.me)).
+
+If this default behavior doesn't fit your need, you can specify different allowed source ranges during `make box-up`, e.g.:
+
+```bash
+make box-up TF_VAR_source_ranges='["1.2.3.4/32","5.6.7.0/24"]'
+```
+
+Alternatively, you can disable incoming traffic restrictions entirely:
+
+```bash
+make box-up RESTRICT_SOURCE_RANGES=no
+```
+
 ## Where to Go from Here?
 
 When logging in to your dev box, the `ssh` session should take you straight to the `~/go/src/github.com/gardener/gardener` directory.
