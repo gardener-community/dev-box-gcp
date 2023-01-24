@@ -38,3 +38,8 @@ variable "desired_status" {
   type    = string
   default = "RUNNING"
 }
+
+variable "source_ranges" {
+  type    = list(string)
+  default = ["0.0.0.0/0"]
+}
