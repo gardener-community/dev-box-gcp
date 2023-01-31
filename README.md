@@ -47,8 +47,8 @@ If you already have a matching ServiceAccount, place its JSON key in `secrets/ga
 Alternatively, you can create a new ServiceAccount and key using the following `gcloud` commands:
 
 ```bash
-PROJECT_ID="$(gcloud config get project)"
-SA_NAME="$USER-gardener-dev"
+export PROJECT_ID="$(gcloud config get project)"
+export SA_NAME="$USER-gardener-dev"
 
 gcloud iam service-accounts create "$SA_NAME" \
   --description="ServiceAccount for Gardener development setup on GCP for $USER"
