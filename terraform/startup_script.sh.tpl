@@ -32,8 +32,19 @@ chmod +x start-gardener-dev.sh
 
 sudo -u ${user} mkdir -p go/src/github.com/gardener/gardener
 apt update
-apt install -y make docker.io golang jq
+apt install -y make docker.io jq
 # allow user to execute docker without sudo
 gpasswd -a ${user} docker
+
+# Install a recent version of go from https://go.dev/dl/ that is used in gardener projects.
+# The golang package from the distribution lags behind significantly.
+go_download_url='https://dl.google.com/go/go1.20.2.linux-amd64.tar.gz'
+go_download_sha256='4eaea32f59cde4dc635fbc42161031d13e1c780b87097f4b4234cfce671f1768'
+go_download_file=/tmp/go.tgz
+wget -O $go_download_file "$go_download_url" --progress=dot:giga
+echo "$go_download_sha256 $go_download_file" | sha256sum -c -
+tar -C /usr/local -xzf $go_download_file
+ln -s /usr/local/go/bin/go /usr/local/bin/go
+rm $go_download_file
 
 touch $startup_script_done_file
