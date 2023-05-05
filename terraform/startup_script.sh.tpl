@@ -47,4 +47,11 @@ tar -C /usr/local -xzf $go_download_file
 ln -s /usr/local/go/bin/go /usr/local/bin/go
 rm $go_download_file
 
+# Install a recent version of delve
+(
+  # HOME doesn't seem to be set in startup-script, populate it manually
+  export HOME=/root;
+  GOBIN=/usr/local/bin go install github.com/go-delve/delve/cmd/dlv@latest;
+)
+
 touch $startup_script_done_file
