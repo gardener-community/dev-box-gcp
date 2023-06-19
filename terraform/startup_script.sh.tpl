@@ -47,4 +47,16 @@ tar -C /usr/local -xzf $go_download_file
 ln -s /usr/local/go/bin/go /usr/local/bin/go
 rm $go_download_file
 
+# Install a recent version of delve
+(
+  # HOME doesn't seem to be set in startup-script, populate it manually
+  export HOME=/root;
+  GOBIN=/usr/local/bin go install github.com/go-delve/delve/cmd/dlv@latest;
+)
+
+# Make dev box ready for IPv6 development
+# see https://github.com/gardener/gardener/blob/master/docs/deployment/getting_started_locally.md#setting-up-ipv6-single-stack-networking-optional
+echo "::1 localhost" | tee -a /etc/hosts
+ip6tables -t nat -A POSTROUTING -o "$(ip route show default | awk '{print $5}')" -s fd00:10::/64 -j MASQUERADE
+
 touch $startup_script_done_file

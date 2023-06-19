@@ -36,7 +36,7 @@ Ensure access to a Google Cloud project and configure `gcloud` accordingly:
 
 ```bash
 gcloud auth login
-gcloud config set project PROJECT_ID
+gcloud config set project PROJECT_ID # (project name)
 ```
 
 ## Prepare ServiceAccount Credentials
@@ -75,7 +75,7 @@ $ export TF_VAR_project="$(gcloud config get project)"
 # export TF_VAR_*=YOUR_VALUE
 # Keep in mind, that the env var name must match the case of the terraform variable name.
 # For example, overwrite the SSH key you want to use for logging into your dev box:
-# export TF_VAR_ssh_key=~/.ssh/id_ed255.pub
+# export TF_VAR_ssh_key=~/.ssh/id_ed25519.pub
 
 $ make box-up
 ...
