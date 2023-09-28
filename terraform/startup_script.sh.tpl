@@ -38,8 +38,8 @@ gpasswd -a ${user} docker
 
 # Install a recent version of go from https://go.dev/dl/ that is used in gardener projects.
 # The golang package from the distribution lags behind significantly.
-go_download_url='https://dl.google.com/go/go1.20.2.linux-amd64.tar.gz'
-go_download_sha256='4eaea32f59cde4dc635fbc42161031d13e1c780b87097f4b4234cfce671f1768'
+go_download_url='https://dl.google.com/go/go1.21.1.linux-amd64.tar.gz'
+go_download_sha256='b3075ae1ce5dab85f89bc7905d1632de23ca196bd8336afd93fa97434cfa55ae'
 go_download_file=/tmp/go.tgz
 wget -O $go_download_file "$go_download_url" --progress=dot:giga
 echo "$go_download_sha256 $go_download_file" | sha256sum -c -
